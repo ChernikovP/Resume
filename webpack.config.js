@@ -6,15 +6,16 @@ module.exports = {
         filename: 'build.js'
     },
 
-    watch: true,
-
-    watchOption: {
-        aggregateTimeout: 100
-    },
-
     devtool: 'source-map',
 
     module: {
+        preLoaders: [
+            {
+                test: /\.js?$/,
+                loader: 'eslint',
+                exclude: /node_modules/
+            }
+        ],
         loaders: [
             {
                 test: /\.js$/,
@@ -22,5 +23,10 @@ module.exports = {
                 exclude: /node_modules/
             }
         ]
+    },
+
+    eslint: {
+        failOnWarning: false,
+        failOnError: true
     }
 };
