@@ -1,9 +1,13 @@
 'use strict';
 
+const webpack = require('webpack');
+
 module.exports = {
-    entry: './client.js',
+    entry: __dirname + '/frontend/client.js',
     output: {
-        filename: 'build.js'
+        path: __dirname + '/public',
+        publicPath: '/',
+        filename: 'build.[hash].js'
     },
 
     devtool: 'source-map',
@@ -28,5 +32,20 @@ module.exports = {
     eslint: {
         failOnWarning: false,
         failOnError: true
-    }
+    },
+
+    resolve: {
+        modulesDirectories: ['node_modules'],
+        extensions: ['', '.js']
+    },
+
+    resolveLoader: {
+        modulesDirectories: ['node_modules'],
+        moduleTemplates: ['*-loader'],
+        extensions: ['', '.js']
+    },
+
+    plugins: [
+        new webpack.NoErrorsPlugin()
+    ]
 };
