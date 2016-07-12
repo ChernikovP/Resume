@@ -2,23 +2,28 @@
 
 import React, { PropTypes } from 'react';
 
+import throttle from '../../utils/throttle';
+import coordinates from '../../utils/coordinates';
+
 import '../../styles/parallax.less';
 
 class Parallax extends React.Component {
     constructor(props) {
         super(props);
 
-        this.onScroll = this.onScroll.bind(this);
+        this.onScroll = throttle(this.onScroll, 10).bind(this);
     }
 
     onScroll() {
-        const scrolledHeight= window.pageYOffset;
-        const limit = this.background.offsetTop  + this.background.offsetHeight;
+        const scrolledHeight = window.pageYOffset;
 
-        if(scrolledHeight >= this.background.offsetTop && scrolledHeight <= limit) {
-            this.background.style.backgroundPositionY = `${(scrolledHeight - this.background.offsetTop) / 2}px`;
+        const offsetTop = coordinates(this.background).top;
+        const offsetBottom = offsetTop  + this.background.offsetHeight;
+
+        if(scrolledHeight >= offsetTop && scrolledHeight <= offsetBottom) {
+            this.background.style.backgroundPositionY = `${(scrolledHeight - offsetTop) / 2}px`;
         }
-        else { this.background.style.backgroundPositionY = '0' };
+        else { this.background.style.backgroundPositionY = '0'; }
     }
 
     componentDidMount() {
@@ -37,15 +42,16 @@ class Parallax extends React.Component {
         return (
             <div className="parallax">
                 <div className={classNames} ref={(e) => this.background = e}></div>
-                <div className="parallax__content">Hi, what's up. dude!</div>
+                <div className="parallax__content">{this.props.children}</div>
             </div>
         );
     }
 }
 
 Parallax.propTypes = {
-    fullHeight: PropTypes.bool,
     backgroundStyle: PropTypes.string.isRequired,
+    children: PropTypes.node.isRequired,
+    fullHeight: PropTypes.bool,
     speed: PropTypes.number
 };
 
