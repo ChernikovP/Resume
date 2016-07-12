@@ -1,0 +1,21 @@
+@import "common";
+
+.parallax {
+  .margin-padding();
+  position: relative;
+}
+
+.parallax__background_full-height {
+  height: 100vh;
+}
+
+.parallax__background_home {
+  background: url("../images/home.jpg") no-repeat;
+  background-size: cover;
+}
+
+.parallax__content {
+  .absolute(50%, 0);
+  width: 100%;
+  text-align: center;
+}
