@@ -8,20 +8,22 @@ import coordinates from '../../utils/coordinates';
 import '../../styles/parallax.less';
 
 class Parallax extends React.Component {
+    static throttleFrequency = 10;
+
     constructor(props) {
         super(props);
 
-        this.onScroll = throttle(this.onScroll, 10).bind(this);
+        this.onScroll = throttle(this.onScroll, Parallax.throttleFrequency).bind(this);
     }
 
     onScroll() {
         const scrolledHeight = window.pageYOffset;
 
         const offsetTop = coordinates(this.background).top;
-        const offsetBottom = offsetTop  + this.background.offsetHeight;
+        const offsetBottom = offsetTop + this.background.offsetHeight;
 
         if(scrolledHeight >= offsetTop && scrolledHeight <= offsetBottom) {
-            this.background.style.backgroundPositionY = `${(scrolledHeight - offsetTop) / 2}px`;
+            this.background.style.backgroundPositionY = `${(scrolledHeight - offsetTop) / this.props.speed}px`;
         }
         else { this.background.style.backgroundPositionY = '0'; }
     }
