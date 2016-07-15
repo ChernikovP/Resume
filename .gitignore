@@ -1,6 +1,10 @@
 # IDE folders
-.idea
+.idea/
 
 # node modules & bower components
-node_modules
-bower_components
+node_modules/
+bower_components/
+
+# ignore public folder except index.html
+public/
+!public/index.html
