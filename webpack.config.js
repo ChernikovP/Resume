@@ -7,7 +7,7 @@ module.exports = {
     output: {
         path: __dirname + '/public',
         publicPath: '/',
-        filename: 'build.[hash].js'
+        filename: 'build.js'
     },
 
     devtool: 'source-map',
@@ -25,6 +25,22 @@ module.exports = {
                 test: /\.js$/,
                 loader: 'babel',
                 exclude: /node_modules/
+            },
+            {
+                test: /\.css$/,
+                loader:'style!css'
+            },
+            {
+                test: /\.less$/,
+                loader:'style!css!less'
+            },
+            {
+                test: /\.(woff|woff2)$/,
+                loader: "url?limit=10000"
+            },
+            {
+                test: /\.(jpg|png|ttf|eot|svg)$/,
+                loader: 'file'
             }
         ]
     },
